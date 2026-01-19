@@ -60,6 +60,7 @@ textarea:focus[data-flux-control],
 select:focus[data-flux-control] {
     @apply outline-hidden ring-2 ring-accent ring-offset-2 ring-offset-accent-foreground;
 }
+<<<<<<< HEAD
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }
@@ -77,6 +78,8 @@ select:focus[data-flux-control] {
 .animate-slide-in {
   animation: slideIn 0.7s ease-out both;
 }
+=======
+>>>>>>> 9c48dd41e66a10a08a044f371e7df927a2a92f09
 
 /* \[:where(&)\]:size-4 {
     @apply size-4;

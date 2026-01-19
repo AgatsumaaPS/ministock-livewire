@@ -10,7 +10,11 @@
             <div>
                 <flux:input wire:model="email" :label="__('Email')" type="email" required autocomplete="email" />
 
+<<<<<<< HEAD
                 @if ($this->hasUnverifiedEmail)
+=======
+                @if (auth()->user() instanceof \Illuminate\Contracts\Auth\MustVerifyEmail &&! auth()->user()->hasVerifiedEmail())
+>>>>>>> 9c48dd41e66a10a08a044f371e7df927a2a92f09
                     <div>
                         <flux:text class="mt-4">
                             {{ __('Your email address is unverified.') }}
@@ -40,8 +44,12 @@
             </div>
         </form>
 
+<<<<<<< HEAD
         @if ($this->showDeleteUser)
             <livewire:settings.delete-user-form />
         @endif
+=======
+        <livewire:settings.delete-user-form />
+>>>>>>> 9c48dd41e66a10a08a044f371e7df927a2a92f09
     </x-settings.layout>
 </section>

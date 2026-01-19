@@ -3,10 +3,16 @@
 namespace App\Livewire\Settings;
 
 use App\Concerns\ProfileValidationRules;
+<<<<<<< HEAD
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Livewire\Attributes\Computed;
+=======
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+>>>>>>> 9c48dd41e66a10a08a044f371e7df927a2a92f09
 use Livewire\Component;
 
 class Profile extends Component
@@ -63,6 +69,7 @@ class Profile extends Component
 
         Session::flash('status', 'verification-link-sent');
     }
+<<<<<<< HEAD
 
     #[Computed]
     public function hasUnverifiedEmail(): bool
@@ -76,4 +83,6 @@ class Profile extends Component
         return ! Auth::user() instanceof MustVerifyEmail
             || (Auth::user() instanceof MustVerifyEmail && Auth::user()->hasVerifiedEmail());
     }
+=======
+>>>>>>> 9c48dd41e66a10a08a044f371e7df927a2a92f09
 }
