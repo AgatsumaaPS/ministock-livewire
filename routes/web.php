@@ -3,14 +3,12 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return redirect()->route('login');
-})->middleware('guest');
+    return redirect()->route('home');
+});
 
-Route::get('/home', function () {
-    return redirect()->route('login');
-})->name('home');
+Route::view('/home', 'home')->name('home');
 
-Route::view('dashboard', 'dashboard')
+Route::view('/dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
