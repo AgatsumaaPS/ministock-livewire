@@ -112,7 +112,10 @@
                 <h2 class="mb-30 wow fadeInUp" data-wow-delay=".4s">MiniStock</h2>
                 <p class="mb-50 wow fadeInUp" data-wow-delay=".6s">Application service to help you manage your stock inventory efficiently.</p>
                 <div class="buttons">
-                 <a href="{{ route('dashboard') }}" class="button button-lg radius-10 wow fadeInUp" data-wow-delay=".7s">Masuk ke Dashboard</a>
+                 <a href="{{ route('dashboard') }}"
+   class="button button-lg radius-10 wow fadeInUp"
+ data-wow-delay=".7s">Masuk ke Dashboard</a>
+
                 </div>
               </div>
             </div>
