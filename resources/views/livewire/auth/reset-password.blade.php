@@ -1,4 +1,4 @@
-<x-layouts.auth>
+<x-layouts::auth>
     <div class="flex flex-col gap-6">
         <x-auth-header :title="__('Reset password')" :description="__('Please enter your new password below')" />
 
@@ -49,4 +49,8 @@
             </div>
         </form>
     </div>
+<<<<<<< HEAD
+</x-layouts::auth>
+=======
 </x-layouts.auth>
+>>>>>>> 9c48dd41e66a10a08a044f371e7df927a2a92f09
