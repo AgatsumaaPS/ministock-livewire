@@ -1,0 +1,160 @@
+/* Custom Styles for Mini Stock */
+
+/* Status Badges */
+.status-badge {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    display: inline-block;
+    text-align: center;
+}
+
+.status-active {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.status-low {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.status-out {
+    background: #f3f4f6;
+    color: #6b7280;
+}
+
+/* Dark Mode Support */
+.dark .status-active {
+    background: #166534;
+    color: #bbf7d0;
+}
+
+.dark .status-low {
+    background: #7f1d1d;
+    color: #fecaca;
+}
+
+.dark .status-out {
+    background: #374151;
+    color: #9ca3af;
+}
+
+/* Category Badge */
+.category-badge {
+    background: #eef2ff;
+    color: #4f46e5;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.dark .category-badge {
+    background: #312e81;
+    color: #c7d2fe;
+}
+
+/* Action Buttons */
+.action-btn {
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+    margin: 2px;
+}
+
+.action-btn.edit {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.action-btn.delete {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.action-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.dark .action-btn.edit {
+    background: #1e3a8a;
+    color: #93c5fd;
+}
+
+.dark .action-btn.delete {
+    background: #7f1d1d;
+    color: #fecaca;
+}
+
+/* Stock Controls */
+.stock-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.stock-controls button {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: 1.5px solid #e5e7eb;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: #3b82f6;
+}
+
+.stock-controls button:hover {
+    background: #f0f2f5;
+    border-color: #3b82f6;
+}
+
+.dark .stock-controls button {
+    background: #374151;
+    border-color: #4b5563;
+    color: #93c5fd;
+}
+
+.dark .stock-controls button:hover {
+    background: #4b5563;
+    border-color: #60a5fa;
+}
+
+/* Upload Area */
+.upload-area {
+    border: 2px dashed #d1d5db;
+    border-radius: 12px;
+    padding: 40px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: #f9fafb;
+}
+
+.upload-area:hover {
+    border-color: #3b82f6;
+    background: #f0f2f5;
+}
+
+.dark .upload-area {
+    border-color: #4b5563;
+    background: #1f2937;
+}
+
+.dark .upload-area:hover {
+    border-color: #60a5fa;
+    background: #374151;
+}
