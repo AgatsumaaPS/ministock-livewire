@@ -8,10 +8,10 @@ use Livewire\Component;
 
 class Dashboard extends Component
 {
-    public $totalProducts;
-    public $totalCategories;
-    public $lowStockCount;
-    public $totalStock;
+    public $totalProducts = 0;
+    public $totalCategories = 0;
+    public $lowStockCount = 0;
+    public $totalStock = 0;
 
     public function mount()
     {
@@ -20,25 +20,17 @@ class Dashboard extends Component
 
     public function loadStats()
     {
-        $this->totalProducts = Product::count();
-        $this->totalCategories = Category::count();
-        $this->lowStockCount = Product::where('stock', '<=', 5)->where('stock', '>', 0)->count();
-        $this->totalStock = Product::sum('stock');
+        // Protect against empty tables
+        $this->totalProducts   = Product::count() ?? 0;
+        $this->totalCategories = Category::count() ?? 0;
+        $this->lowStockCount   = Product::where('stock', '<=', 5)
+                                         ->where('stock', '>', 0)
+                                         ->count() ?? 0;
+        $this->totalStock      = Product::sum('stock') ?? 0;
     }
 
     public function render()
     {
-        $recentProducts = Product::with('category')->latest()->take(5)->get();
-        $lowStockProducts = Product::with('category')
-            ->where('stock', '<=', 5)
-            ->where('stock', '>', 0)
-            ->orderBy('stock')
-            ->take(5)
-            ->get();
-
-        return view('livewire.dashboard', [
-            'recentProducts' => $recentProducts,
-            'lowStockProducts' => $lowStockProducts,
-        ]);
+        return view('livewire.dashboard');
     }
 }
