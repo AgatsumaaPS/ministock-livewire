@@ -1,21 +1,17 @@
 <?php
 
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
+// Use controller-backed views for login/register to keep authentication simple
 Route::middleware('guest')->group(function () {
-    Volt::route('register', 'pages.auth.register')
-        ->name('register');
+    Route::get('register', [RegisteredUserController::class, 'create'])->name('register');
+    Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
 
-    Volt::route('login', 'pages.auth.login')
-        ->name('login');
-
-    Volt::route('forgot-password', 'pages.auth.forgot-password')
-        ->name('password.request');
-
-    Volt::route('reset-password/{token}', 'pages.auth.reset-password')
-        ->name('password.reset');
+    // Password reset & verification handled by Fortify's routes (no duplicated GET views here)
 });
 
 Route::middleware('auth')->group(function () {

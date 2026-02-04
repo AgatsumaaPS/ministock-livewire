@@ -18,22 +18,6 @@ class Product extends Model
         'image_path'
     ];
 
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::updated(function ($product) {
-            if ($product->isDirty('stock')) {
-                $product->dispatchStockUpdate();
-            }
-        });
-    }
-
-    public function dispatchStockUpdate()
-    {
-        \Livewire::dispatch('stockUpdated');
-    }
-
     public function category()
     {
         return $this->belongsTo(Category::class);
