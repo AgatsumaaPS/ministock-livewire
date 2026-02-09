@@ -128,63 +128,114 @@
                 </a>
             </div>
 
-            <!-- Recent Products -->
-            <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-                <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
-                    <h3 class="font-semibold text-gray-900">Produk Terbaru</h3>
-                    <a href="{{ route('admin.products.index') }}" class="text-sm text-blue-600 hover:text-blue-800">Lihat Semua →</a>
+            <!-- Recent Products & Recent Activity -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                <!-- Recent Products Table -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                    <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center">
+                        <h3 class="text-lg font-bold text-gray-900">Produk Terbaru</h3>
+                        <a href="{{ route('admin.products.index') }}" class="text-sm text-blue-600 hover:underline">Lihat Semua</a>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Produk</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stok</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                @forelse($recentProducts as $product)
+                                <tr class="hover:bg-gray-50 cursor-pointer transition" onclick="window.location='{{ route('admin.products.show', $product) }}'">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            @if($product->image_path)
+                                                <img src="{{ asset('storage/' . $product->image_path) }}" alt="{{ $product->name }}" class="w-8 h-8 rounded-lg object-cover mr-3 shadow-sm border border-gray-100">
+                                            @else
+                                                <div class="w-8 h-8 bg-blue-50 rounded-lg flex items-center justify-center mr-3 text-blue-600 shadow-sm border border-blue-100">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+                                                    </svg>
+                                                </div>
+                                            @endif
+                                            <div>
+                                                <div class="text-sm font-bold text-gray-900">{{ $product->name }}</div>
+                                                <div class="text-[10px] font-mono text-gray-400 mt-0.5">{{ $product->sku }}</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium">
+                                        {{ $product->stock }}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        @if($product->stock === 0)
+                                            <span class="px-2 py-1 text-[10px] font-bold rounded-full bg-red-100 text-red-800">Habis</span>
+                                        @elseif($product->stock <= 5)
+                                            <span class="px-2 py-1 text-[10px] font-bold rounded-full bg-orange-100 text-orange-800">Rendah</span>
+                                        @else
+                                            <span class="px-2 py-1 text-[10px] font-bold rounded-full bg-green-100 text-green-800">OK</span>
+                                        @endif
+                                    </td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="3" class="px-6 py-8 text-center text-gray-500 text-sm">Belum ada produk</td>
+                                </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-                <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-50">
-                            <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Produk</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">SKU</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kategori</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stok</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white divide-y divide-gray-200">
-                            @forelse($recentProducts as $product)
-                            <tr class="hover:bg-gray-50">
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="font-medium text-gray-900">{{ $product->name }}</div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <span class="text-gray-600 font-mono text-sm">{{ $product->sku }}</span>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
-                                        {{ $product->category?->name ?? '-' }}
-                                    </span>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-gray-900 font-medium">
-                                    {{ $product->stock }}
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    @if($product->stock === 0)
-                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">Habis</span>
-                                    @elseif($product->stock <= 5)
-                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800">Stok Rendah</span>
-                                    @else
-                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">Tersedia</span>
-                                    @endif
-                                </td>
-                            </tr>
-                            @empty
-                            <tr>
-                                <td colspan="5" class="px-6 py-8 text-center text-gray-500">
-                                    <div class="text-4xl mb-2">📦</div>
-                                    <p>Belum ada produk</p>
-                                    <a href="{{ route('admin.products.create') }}" class="inline-block mt-3 px-4 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700">
-                                        Tambah Produk Pertama
-                                    </a>
-                                </td>
-                            </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
+
+                <!-- Recent Activity Logs -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                    <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center">
+                        <h3 class="text-lg font-bold text-gray-900">Aktivitas Terbaru</h3>
+                        @if(auth()->user()->isAdmin())
+                            <a href="{{ route('admin.logs.index') }}" class="text-sm text-blue-600 hover:underline">Lihat Semua</a>
+                        @endif
+                    </div>
+                    <div class="p-6">
+                        <div class="flow-root">
+                            <ul role="list" class="-mb-8">
+                                @forelse($recentActivity as $log)
+                                <li>
+                                    <div class="relative pb-8">
+                                        @if (!$loop->last)
+                                            <span class="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200" aria-hidden="true"></span>
+                                        @endif
+                                        <div class="relative flex space-x-3">
+                                            <div>
+                                                <span class="h-8 w-8 rounded-full flex items-center justify-center ring-8 ring-white {{ $log->action === 'created' ? 'bg-green-500' : ($log->action === 'updated' ? 'bg-blue-500' : 'bg-red-500') }}">
+                                                    <span class="text-white">
+                                                        {!! $log->action_icon !!}
+                                                    </span>
+                                                </span>
+                                            </div>
+                                            <div class="flex min-w-0 flex-1 justify-between space-x-4 pt-1.5">
+                                                <div>
+                                                    <p class="text-sm text-gray-500">
+                                                        <span class="font-medium text-gray-900">{{ $log->user->name }}</span>
+                                                        {{ $log->action_text }}
+                                                        <span class="font-medium text-gray-900">{{ $log->model_name }}</span>
+                                                    </p>
+                                                </div>
+                                                <div class="whitespace-nowrap text-right text-xs text-gray-400">
+                                                    <time datetime="{{ $log->created_at }}">{{ $log->created_at->diffForHumans() }}</time>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                @empty
+                                <div class="text-center py-8 text-gray-500 text-sm">
+                                    Belum ada aktivitas
+                                </div>
+                                @endforelse
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
 

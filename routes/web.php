@@ -39,6 +39,9 @@ Route::get('/dashboard', function () {
     $recentProducts = \App\Models\Product::with('category')->latest()->take(5)->get();
     $pendingUsers = \App\Models\User::where('is_admin', false)->count();
     
+    // Recent Activity Logs
+    $recentActivity = \App\Models\ActivityLog::with('user')->latest()->take(5)->get();
+    
     return view('dashboard', compact(
         'totalProducts',
         'totalCategories', 
@@ -46,7 +49,8 @@ Route::get('/dashboard', function () {
         'outOfStockCount',
         'totalStock',
         'recentProducts',
-        'pendingUsers'
+        'pendingUsers',
+        'recentActivity'
     ));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -70,6 +74,10 @@ Route::middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::cla
         Route::post('users/{user}/approve', [\App\Http\Controllers\Admin\UserController::class, 'approve'])->name('users.approve');
         Route::post('users/{user}/revoke', [\App\Http\Controllers\Admin\UserController::class, 'revoke'])->name('users.revoke');
         Route::delete('users/{user}', [\App\Http\Controllers\Admin\UserController::class, 'destroy'])->name('users.destroy');
+
+        // Activity Logs
+        Route::get('logs', [\App\Http\Controllers\Admin\LogController::class, 'index'])->name('logs.index');
+        Route::get('logs/{log}', [\App\Http\Controllers\Admin\LogController::class, 'show'])->name('logs.show');
     });
 
 /*

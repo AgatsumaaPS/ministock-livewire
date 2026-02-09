@@ -24,6 +24,8 @@ class User extends Authenticatable
         'email',
         'password',
         'is_admin',
+        'role',
+        'status',
     ];
 
     /**
@@ -31,7 +33,15 @@ class User extends Authenticatable
      */
     public function isAdmin(): bool
     {
-        return (bool) ($this->is_admin ?? false);
+        return $this->role === 'admin' || (bool) $this->is_admin;
+    }
+
+    /**
+     * Check if user is pending
+     */
+    public function isPending(): bool
+    {
+        return $this->status === 'pending';
     }
 
     /**
