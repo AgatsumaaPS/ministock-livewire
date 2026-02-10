@@ -10,10 +10,27 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    if (auth()->check()) {
-        return redirect()->route('dashboard');
-    }
-    return redirect()->route('login');
+    return view('welcome');
+});
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    
+    // Pending Approval Route
+    Route::get('/pending-approval', function () {
+        if (auth()->user()->status === 'active' || auth()->user()->isAdmin()) {
+            return redirect()->intended(auth()->user()->isAdmin() ? route('dashboard') : route('user.dashboard'));
+        }
+        return view('livewire.auth.pending-approval');
+    })->name('pending.approval');
+
+    Route::middleware(['status.check'])->group(function () {
+        Route::get('/user/dashboard', function () {
+            if (auth()->user()->isAdmin()) {
+                return redirect()->route('dashboard');
+            }
+            return view('user.dashboard');
+        })->name('user.dashboard');
+    });
 });
 
 /*

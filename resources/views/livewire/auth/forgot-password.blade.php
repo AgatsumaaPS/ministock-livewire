@@ -1,81 +1,40 @@
-<x-layouts::auth :title="__('Forgot password')">
-    <div class="min-h-screen bg-gradient-to-br from-violet-50 via-white to-violet-100 flex items-center justify-center px-6">
-
-        <!-- OUTER CARD -->
-        <div class="w-full max-w-6xl bg-gradient-to-br from-violet-600 to-violet-700 rounded-3xl shadow-2xl overflow-hidden">
-            <div class="grid grid-cols-1 lg:grid-cols-2">
-
-                <!-- LEFT : FORM (WHITE) -->
-                <div class="p-8 lg:p-12 bg-white text-slate-800 shadow-xl shadow-violet-200/50">
-
-                    <x-auth-header
-                        :title="__('Forgot password')"
-                        :description="__('Enter your email to receive a password reset link')"
-                    />
-
-                    <!-- Session Status -->
-                    <x-auth-session-status
-                        class="text-center mb-6"
-                        :status="session('status')"
-                    />
-
-                    <form
-                        method="POST"
-                        action="{{ route('password.email') }}"
-                        class="flex flex-col gap-6"
-                    >
-                        @csrf
-
-                        <flux:input
-                            name="email"
-                            :label="__('Email address')"
-                            type="email"
-                            required
-                            autofocus
-                            placeholder="email@example.com"
-                        />
-
-                        <flux:button
-                            variant="primary"
-                            type="submit"
-                            class="w-full !bg-violet-600 hover:!bg-violet-700 !text-white"
-                            data-test="email-password-reset-link-button"
-                        >
-                            {{ __('Email password reset link') }}
-                        </flux:button>
-                    </form>
-
-                    <div class="mt-6 text-center text-sm text-slate-500">
-                        <span>{{ __('Or, return to') }}</span>
-                        <flux:link
-                            :href="route('login')"
-                            wire:navigate
-                            class="text-violet-600 hover:underline"
-                        >
-                            {{ __('Log in') }}
-                        </flux:link>
-                    </div>
-                </div>
-
-                <!-- RIGHT : BRAND PANEL -->
-                <div class="hidden lg:flex bg-violet-700 p-12 text-white flex-col justify-center">
-                    <h2 class="text-4xl font-bold leading-tight">
-                        MiniStock<br>
-                        Stock & Warehouse System
-                    </h2>
-
-                    <p class="mt-4 text-violet-200 max-w-md">
-                        Forgot your password? No worries.
-                        MiniStock helps you recover access quickly
-                        so you can get back to managing your inventory.
-                    </p>
-
-                    <div class="mt-8 text-sm text-violet-300">
-                        Secure & reliable account recovery
-                    </div>
-                </div>
-
-            </div>
-        </div>
+<x-layouts.auth-vertical :title="__('Forgot Password')">
+    <div class="text-center mb-8">
+        <h2 class="text-2xl font-bold text-slate-900">Reset Password</h2>
+        <p class="text-slate-500 text-sm mt-2">Enter your email to receive instructions</p>
     </div>
-</x-layouts::auth>
+
+    <x-auth-session-status class="mb-4" :status="session('status')" />
+
+    <form method="POST" action="{{ route('password.email') }}" class="space-y-5">
+        @csrf
+
+        <!-- Email -->
+        <div class="input-group">
+            <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2 transition-colors">
+                Email Address
+            </label>
+            <input 
+                name="email" 
+                type="email" 
+                required 
+                autofocus
+                class="block w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white transition-all duration-200" 
+                placeholder="you@example.com"
+            >
+        </div>
+
+        <button type="submit" class="w-full mt-6 flex justify-center py-3.5 px-4 border border-transparent rounded-xl shadow-sm text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transform hover:-translate-y-0.5 transition-all duration-200 uppercase tracking-wide">
+            Send Reset Link
+        </button>
+    </form>
+
+    <div class="mt-8 text-center">
+        <a href="{{ route('login') }}" class="inline-flex items-center text-sm font-medium text-slate-500 hover:text-indigo-600 transition-colors group">
+            <svg class="w-4 h-4 mr-1.5 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+            </svg>
+            Back to Login
+        </a>
+    </div>
+</x-layouts.auth-vertical>
