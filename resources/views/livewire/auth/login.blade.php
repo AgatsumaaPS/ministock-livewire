@@ -1,100 +1,66 @@
-<x-layouts::auth :title="'Login to your account'">
-    <div class="min-h-screen bg-gradient-to-br from-violet-50 via-white to-violet-100 flex items-center justify-center px-6">
-
-        <!-- OUTER CARD -->
-        <div class="w-full max-w-6xl bg-gradient-to-br from-violet-600 to-violet-700 rounded-3xl shadow-2xl overflow-hidden">
-            <div class="grid grid-cols-1 lg:grid-cols-2">
-
-                <!-- LEFT : LOGIN FORM (WHITE) -->
-                <div class="p-8 lg:p-12 bg-white text-slate-800 shadow-xl shadow-violet-200/50">
-                    <h1 class="text-3xl font-bold mb-2">Welcome Back</h1>
-                    <p class="text-slate-500 mb-8">Login to MiniStock Admin</p>
-
-                    <form method="POST" action="{{ route('login.store') }}" class="space-y-6">
-                        @csrf
-
-                        <!-- Email -->
-                        <div>
-                            <label class="text-sm font-medium text-slate-600">Email</label>
-                            <input
-                                type="email"
-                                name="email"
-                                required
-                                placeholder="Enter your email"
-                                class="mt-2 w-full rounded-xl bg-white border border-slate-300
-                                       px-4 py-3 text-sm text-slate-800 placeholder-slate-400
-                                       focus:ring-2 focus:ring-violet-500 focus:border-violet-500 focus:outline-none"
-                            >
-                        </div>
-                                                    @error('email')
-                                <p class="mt-2 text-sm text-red-600">
-                                    {{ $message }}
-                                </p>
-                            @enderror
-
-
-                        <!-- Password -->
-                        <div>
-                            <div class="flex justify-between text-sm">
-                                <label class="font-medium text-slate-600">Password</label>
-                                <a href="{{ route('password.request') }}"
-                                   class="text-violet-600 hover:underline">
-                                    Forgot Password?
-                                </a>
-                            </div>
-
-                            <input
-                                type="password"
-                                name="password"
-                                required
-                                placeholder="••••••••"
-                                class="mt-2 w-full rounded-xl bg-white border border-slate-300
-                                       px-4 py-3 text-sm text-slate-800 placeholder-slate-400
-                                       focus:ring-2 focus:ring-violet-500 focus:border-violet-500 focus:outline-none"
-                            >
-                        </div>
-
-                        <!-- Remember -->
-                        <label class="flex items-center gap-2 text-sm text-slate-600">
-                            <input type="checkbox" class="rounded border-slate-300 text-violet-600">
-                            Remember me
-                        </label>
-
-                        <!-- Button -->
-                        <button
-                            type="submit"
-                            class="w-full bg-violet-600 hover:bg-violet-700
-                                   py-3 rounded-xl font-semibold text-white transition">
-                            Sign in to your account
-                        </button>
-                    </form>
-
-                    <p class="mt-6 text-sm text-slate-500">
-                        Don’t have an account?
-                        <a href="{{ route('register') }}" class="text-violet-600 hover:underline">
-                            Sign up
-                        </a>
-                    </p>
-                </div>
-
-                <!-- RIGHT : BRAND PANEL -->
-                <div class="hidden lg:flex bg-violet-700 p-12 text-white flex-col justify-center">
-                    <h2 class="text-4xl font-bold leading-tight">
-                        MiniStock<br>
-                        Stock & Warehouse System
-                    </h2>
-
-                    <p class="mt-4 text-violet-200 max-w-md">
-                        Monitor stock levels, manage warehouse documentation,
-                        and keep your inventory organized in one system.
-                    </p>
-
-                    <div class="mt-8 text-sm text-violet-300">
-                        Trusted by <span class="font-semibold">15k+</span> users
-                    </div>
-                </div>
-
-            </div>
-        </div>
+<x-layouts.auth-vertical :title="__('Login')">
+    <div class="text-center mb-8">
+        <h2 class="text-2xl font-bold text-slate-900">Sign In</h2>
+        <p class="text-slate-500 text-sm mt-2">Welcome back to MiniStock</p>
     </div>
-</x-layouts::auth>
+
+    <x-auth-session-status class="mb-4" :status="session('status')" />
+
+    <form method="POST" action="{{ route('login') }}" class="space-y-5">
+        @csrf
+
+        <!-- Email -->
+        <div class="input-group">
+            <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2 transition-colors">
+                Email Address
+            </label>
+            <input 
+                name="email" 
+                type="email" 
+                required 
+                autofocus
+                class="block w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white transition-all duration-200" 
+                placeholder="you@example.com"
+            >
+        </div>
+
+        <!-- Password -->
+        <div class="input-group">
+            <div class="flex justify-between items-center mb-2">
+                <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider transition-colors">
+                    Password
+                </label>
+            </div>
+            <input 
+                name="password" 
+                type="password" 
+                required 
+                class="block w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white transition-all duration-200" 
+                placeholder="Enter your password"
+            >
+        </div>
+
+        <div class="flex items-center justify-between mt-4">
+            <label class="flex items-center cursor-pointer group">
+                <input type="checkbox" name="remember" class="w-4 h-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 transition-colors">
+                <span class="ml-2 text-sm text-slate-500 group-hover:text-slate-700 transition-colors">Remember me</span>
+            </label>
+            <a href="{{ route('password.request') }}" class="text-sm font-medium text-indigo-600 hover:text-indigo-500 transition-colors">
+                Forgot Password?
+            </a>
+        </div>
+
+        <button type="submit" class="w-full mt-6 flex justify-center py-3.5 px-4 border border-transparent rounded-xl shadow-sm text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transform hover:-translate-y-0.5 transition-all duration-200 uppercase tracking-wide">
+            Sign In
+        </button>
+    </form>
+
+    <div class="mt-8 text-center">
+        <p class="text-sm text-slate-500">
+            Don't have an account? 
+            <a href="{{ route('register') }}" class="font-semibold text-indigo-600 hover:text-indigo-500 ml-1 transition-colors" wire:navigate>
+                Create Account
+            </a>
+        </p>
+    </div>
+</x-layouts.auth-vertical>

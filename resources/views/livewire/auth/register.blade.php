@@ -1,104 +1,80 @@
-<x-layouts::auth :title="'Create an account'">
-    <div class="min-h-screen bg-gradient-to-br from-violet-50 via-white to-violet-100 flex items-center justify-center px-6">
-
-        <!-- OUTER CARD -->
-        <div class="w-full max-w-6xl bg-gradient-to-br from-violet-600 to-violet-700 rounded-3xl shadow-2xl overflow-hidden">
-            <div class="grid grid-cols-1 lg:grid-cols-2">
-
-                <!-- LEFT : REGISTER FORM (WHITE) -->
-                <div class="p-8 lg:p-12 bg-white text-slate-800 shadow-xl shadow-violet-200/50">
-
-                    <x-auth-header
-                        :title="__('Create an account')"
-                        :description="__('Enter your details below to create your account')"
-                    />
-
-                    <!-- Session Status -->
-                    <x-auth-session-status class="text-center mb-6" :status="session('status')" />
-
-                    <form method="POST" action="{{ route('register.store') }}" class="flex flex-col gap-6">
-                        @csrf
-
-                        <flux:input
-                            name="name"
-                            :label="__('Name')"
-                            :value="old('name')"
-                            type="text"
-                            required
-                            autofocus
-                            autocomplete="name"
-                            placeholder="Full name"
-                        />
-
-                        <flux:input
-                            name="email"
-                            :label="__('Email address')"
-                            :value="old('email')"
-                            type="email"
-                            required
-                            autocomplete="email"
-                            placeholder="email@example.com"
-                        />
-
-                        <flux:input
-                            name="password"
-                            :label="__('Password')"
-                            type="password"
-                            required
-                            autocomplete="new-password"
-                            placeholder="Password"
-                            viewable
-                        />
-
-                        <flux:input
-                            name="password_confirmation"
-                            :label="__('Confirm password')"
-                            type="password"
-                            required
-                            autocomplete="new-password"
-                            placeholder="Confirm password"
-                            viewable
-                        />
-
-                        <flux:button
-                            type="submit"
-                            variant="primary"
-                            class="w-full !bg-violet-600 hover:!bg-violet-700 !text-white"
-                        >
-                            {{ __('Create account') }}
-                        </flux:button>
-                    </form>
-
-                    <div class="mt-6 text-center text-sm text-slate-500">
-                        <span>{{ __('Already have an account?') }}</span>
-                        <flux:link
-                            :href="route('login')"
-                            wire:navigate
-                            class="text-violet-600 hover:underline"
-                        >
-                            {{ __('Log in') }}
-                        </flux:link>
-                    </div>
-                </div>
-
-                <!-- RIGHT : BRAND PANEL -->
-                <div class="hidden lg:flex bg-violet-700 p-12 text-white flex-col justify-center">
-                    <h2 class="text-4xl font-bold leading-tight">
-                        MiniStock<br>
-                        Stock & Warehouse System
-                    </h2>
-
-                    <p class="mt-4 text-violet-200 max-w-md">
-                        Create your MiniStock account and start monitoring inventory,
-                        managing warehouse data, and tracking stock with ease.
-                    </p>
-
-                    <div class="mt-8 text-sm text-violet-300">
-                        Trusted by <span class="font-semibold">15k+</span> users
-                    </div>
-                </div>
-
-            </div>
-        </div>
+<x-layouts.auth-vertical :title="__('Register')">
+    <div class="text-center mb-8">
+        <h2 class="text-2xl font-bold text-slate-900">Create Account</h2>
+        <p class="text-slate-500 text-sm mt-2">Join MiniStock to manage your inventory</p>
     </div>
-</x-layouts::auth>
+
+    <form method="POST" action="{{ route('register') }}" class="space-y-5">
+        @csrf
+
+        <!-- Name -->
+        <div class="input-group">
+            <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2 transition-colors">
+                Full Name
+            </label>
+            <input 
+                name="name" 
+                type="text" 
+                required 
+                autofocus
+                class="block w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white transition-all duration-200" 
+                placeholder="John Doe"
+            >
+        </div>
+
+        <!-- Email -->
+        <div class="input-group">
+            <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2 transition-colors">
+                Email Address
+            </label>
+            <input 
+                name="email" 
+                type="email" 
+                required 
+                class="block w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white transition-all duration-200" 
+                placeholder="you@example.com"
+            >
+        </div>
+
+        <!-- Password -->
+        <div class="input-group">
+            <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2 transition-colors">
+                Password
+            </label>
+            <input 
+                name="password" 
+                type="password" 
+                required 
+                class="block w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white transition-all duration-200" 
+                placeholder="Min. 8 characters"
+            >
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="input-group">
+            <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2 transition-colors">
+                Confirm Password
+            </label>
+            <input 
+                name="password_confirmation" 
+                type="password" 
+                required 
+                class="block w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white transition-all duration-200" 
+                placeholder="Re-enter password"
+            >
+        </div>
+
+        <button type="submit" class="w-full mt-6 flex justify-center py-3.5 px-4 border border-transparent rounded-xl shadow-sm text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transform hover:-translate-y-0.5 transition-all duration-200 uppercase tracking-wide">
+            Get Started
+        </button>
+    </form>
+
+    <div class="mt-8 text-center">
+        <p class="text-sm text-slate-500">
+            Already have an account? 
+            <a href="{{ route('login') }}" class="font-semibold text-indigo-600 hover:text-indigo-500 ml-1 transition-colors" wire:navigate>
+                Log In
+            </a>
+        </p>
+    </div>
+</x-layouts.auth-vertical>
